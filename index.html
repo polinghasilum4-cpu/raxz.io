@@ -3,152 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darkness DDoS Toolkit v3.0</title>
+    <title>DARKNET DDoS v4.0</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="matrix-bg"></div>
+    <div class="hacker-bg"></div>
+    <div class="matrix-effect"></div>
     
     <div class="container">
+        <!-- Header dengan Logo Hacker -->
         <div class="header">
-            <h1 class="title glowing">DARKNESS DDoS v3.0</h1>
-            <p class="subtitle">Advanced Web-Based DDoS Attack Platform</p>
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-skull-crossbones"></i>
+                    <div class="logo-text">
+                        <h1 class="title">DARKNET</h1>
+                        <span class="subtitle">DDoS FRAMEWORK v4.0</span>
+                    </div>
+                </div>
+                <div class="status-panel">
+                    <div class="status-item">
+                        <span class="status-label">SYSTEM</span>
+                        <span class="status-value online">ONLINE</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">MODE</span>
+                        <span class="status-value stealth">STEALTH</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- Main Stats Dashboard -->
         <div class="stats-panel">
             <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-broadcast-tower"></i>
+                </div>
                 <div class="stat-value" id="packetsSent">0</div>
                 <div class="stat-label">PACKETS SENT</div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 0%"></div>
+                </div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
                 <div class="stat-value" id="attackPower">0%</div>
                 <div class="stat-label">ATTACK POWER</div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 0%"></div>
+                </div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
                 <div class="stat-value" id="activeThreads">0</div>
                 <div class="stat-label">ACTIVE THREADS</div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 0%"></div>
+                </div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
                 <div class="stat-value" id="targetStatus">IDLE</div>
                 <div class="stat-label">TARGET STATUS</div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 0%"></div>
+                </div>
             </div>
         </div>
 
-        <div class="attack-panel">
-            <h2 class="panel-title">QUICK ATTACK LAUNCHER</h2>
+        <!-- Quick Attack Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                <i class="fas fa-rocket"></i>
+                <h2>QUICK ATTACK LAUNCHER</h2>
+                <span class="panel-badge">INSTANT</span>
+            </div>
             <div class="attack-grid">
-                <div class="attack-card">
-                    <div class="attack-icon">⚡</div>
+                <div class="attack-card" data-type="udp">
+                    <div class="attack-icon">
+                        <i class="fas fa-bomb"></i>
+                    </div>
                     <h3>UDP FLOOD</h3>
-                    <p>High-speed UDP packet flooding</p>
-                    <button class="btn" onclick="startAttack('udp')">LAUNCH UDP FLOOD</button>
+                    <p>Network layer saturation</p>
+                    <div class="attack-stats">
+                        <span class="stat-tag high">HIGH POWER</span>
+                        <span class="stat-tag medium">MEDIUM RISK</span>
+                    </div>
+                    <button class="btn btn-attack" onclick="startAttack('udp')">
+                        <i class="fas fa-play"></i> LAUNCH
+                    </button>
                 </div>
-                <div class="attack-card">
-                    <div class="attack-icon">🌐</div>
+                
+                <div class="attack-card" data-type="http">
+                    <div class="attack-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
                     <h3>HTTP FLOOD</h3>
-                    <p>Application layer HTTP attacks</p>
-                    <button class="btn" onclick="startAttack('http')">LAUNCH HTTP FLOOD</button>
+                    <p>Application layer attack</p>
+                    <div class="attack-stats">
+                        <span class="stat-tag medium">MEDIUM POWER</span>
+                        <span class="stat-tag low">LOW RISK</span>
+                    </div>
+                    <button class="btn btn-attack" onclick="startAttack('http')">
+                        <i class="fas fa-play"></i> LAUNCH
+                    </button>
                 </div>
-                <div class="attack-card">
-                    <div class="attack-icon">🔧</div>
+                
+                <div class="attack-card" data-type="slowloris">
+                    <div class="attack-icon">
+                        <i class="fas fa-tachometer-alt-slow"></i>
+                    </div>
                     <h3>SLOWLORIS</h3>
-                    <p>Slow HTTP headers attack</p>
-                    <button class="btn" onclick="startAttack('slowloris')">LAUNCH SLOWLORIS</button>
+                    <p>Connection exhaustion</p>
+                    <div class="attack-stats">
+                        <span class="stat-tag medium">MEDIUM POWER</span>
+                        <span class="stat-tag low">LOW RISK</span>
+                    </div>
+                    <button class="btn btn-attack" onclick="startAttack('slowloris')">
+                        <i class="fas fa-play"></i> LAUNCH
+                    </button>
                 </div>
-                <div class="attack-card">
-                    <div class="attack-icon">💥</div>
+                
+                <div class="attack-card" data-type="multi">
+                    <div class="attack-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
                     <h3>MULTI-VECTOR</h3>
                     <p>Combined attack methods</p>
-                    <button class="btn" onclick="startAttack('multi')">LAUNCH MULTI-VECTOR</button>
+                    <div class="attack-stats">
+                        <span class="stat-tag very-high">MAX POWER</span>
+                        <span class="stat-tag high">HIGH RISK</span>
+                    </div>
+                    <button class="btn btn-attack" onclick="startAttack('multi')">
+                        <i class="fas fa-play"></i> LAUNCH
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="attack-panel">
-            <h2 class="panel-title">ADVANCED ATTACK CONFIGURATION</h2>
+        <!-- Advanced Configuration -->
+        <div class="panel">
+            <div class="panel-header">
+                <i class="fas fa-cogs"></i>
+                <h2>ADVANCED ATTACK CONFIGURATION</h2>
+                <span class="panel-badge">EXPERT</span>
+            </div>
             
-            <div class="form-group">
-                <label for="targetUrl">TARGET URL / IP:</label>
-                <input type="text" id="targetUrl" placeholder="https://target.com or 192.168.1.1" value="">
+            <div class="config-grid">
+                <div class="form-group">
+                    <label for="targetUrl">
+                        <i class="fas fa-crosshairs"></i> TARGET URL / IP
+                    </label>
+                    <input type="text" id="targetUrl" placeholder="https://target.com or 192.168.1.1">
+                </div>
+
+                <div class="form-group">
+                    <label for="targetPort">
+                        <i class="fas fa-plug"></i> TARGET PORT
+                    </label>
+                    <input type="number" id="targetPort" value="80" min="1" max="65535">
+                </div>
+
+                <div class="form-group">
+                    <label for="attackType">
+                        <i class="fas fa-fist-raised"></i> ATTACK TYPE
+                    </label>
+                    <select id="attackType">
+                        <option value="udp">UDP FLOOD</option>
+                        <option value="tcp">TCP SYN FLOOD</option>
+                        <option value="http">HTTP FLOOD</option>
+                        <option value="slowloris">SLOWLORIS</option>
+                        <option value="dns">DNS AMPLIFICATION</option>
+                        <option value="multi">MULTI-VECTOR</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="threads">
+                        <i class="fas fa-project-diagram"></i> THREADS
+                    </label>
+                    <input type="number" id="threads" value="50" min="1" max="1000">
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">
+                        <i class="fas fa-clock"></i> DURATION (s)
+                    </label>
+                    <input type="number" id="duration" value="60" min="1" max="3600">
+                </div>
+
+                <div class="form-group">
+                    <label for="packetSize">
+                        <i class="fas fa-weight-hanging"></i> PACKET SIZE
+                    </label>
+                    <input type="number" id="packetSize" value="1024" min="1" max="65535">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="targetPort">TARGET PORT:</label>
-                <input type="number" id="targetPort" value="80" min="1" max="65535">
-            </div>
-
-            <div class="form-group">
-                <label for="attackType">ATTACK TYPE:</label>
-                <select id="attackType">
-                    <option value="udp">UDP FLOOD</option>
-                    <option value="tcp">TCP SYN FLOOD</option>
-                    <option value="http">HTTP FLOOD</option>
-                    <option value="slowloris">SLOWLORIS</option>
-                    <option value="dns">DNS AMPLIFICATION</option>
-                    <option value="multi">MULTI-VECTOR</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="threads">NUMBER OF THREADS:</label>
-                <input type="number" id="threads" value="50" min="1" max="1000">
-            </div>
-
-            <div class="form-group">
-                <label for="duration">DURATION (seconds):</label>
-                <input type="number" id="duration" value="60" min="1" max="3600">
-            </div>
-
-            <div class="form-group">
-                <label for="packetSize">PACKET SIZE (bytes):</label>
-                <input type="number" id="packetSize" value="1024" min="1" max="65535">
-            </div>
-
-            <div class="form-group">
-                <label for="customPayload">CUSTOM PAYLOAD (JSON):</label>
+            <div class="form-group full-width">
+                <label for="customPayload">
+                    <i class="fas fa-code"></i> CUSTOM PAYLOAD (JSON)
+                </label>
                 <textarea id="customPayload" placeholder='{"method": "GET", "headers": {}, "data": ""}'></textarea>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="btn" onclick="startCustomAttack()">🚀 LAUNCH CUSTOM ATTACK</button>
-                <button class="btn btn-stop" onclick="stopAllAttacks()">🛑 STOP ALL ATTACKS</button>
-                <button class="btn btn-export" onclick="exportConfig()">💾 EXPORT CONFIG</button>
-                <button class="btn btn-import" onclick="importConfig()">📁 IMPORT CONFIG</button>
+            <div class="action-buttons">
+                <button class="btn btn-launch" onclick="startCustomAttack()">
+                    <i class="fas fa-fire"></i> LAUNCH CUSTOM ATTACK
+                </button>
+                <button class="btn btn-stop" onclick="stopAllAttacks()">
+                    <i class="fas fa-stop"></i> STOP ALL ATTACKS
+                </button>
+                <button class="btn btn-export" onclick="exportConfig()">
+                    <i class="fas fa-download"></i> EXPORT CONFIG
+                </button>
+                <button class="btn btn-import" onclick="importConfig()">
+                    <i class="fas fa-upload"></i> IMPORT CONFIG
+                </button>
             </div>
         </div>
 
-        <div class="config-section">
-            <h2 class="panel-title">ATTACK PROGRESS</h2>
-            <div class="progress-bar">
-                <div class="progress-fill" id="attackProgress"></div>
+        <!-- Attack Progress -->
+        <div class="panel">
+            <div class="panel-header">
+                <i class="fas fa-chart-line"></i>
+                <h2>ATTACK PROGRESS MONITOR</h2>
+                <span class="panel-badge">LIVE</span>
             </div>
-            <div id="progressText" style="text-align: center; margin: 10px 0; color: #00ff00;">Ready to attack...</div>
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="attackProgress"></div>
+                </div>
+                <div class="progress-info">
+                    <span id="progressText">System Ready - No Active Attacks</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric">
+                    <span class="metric-label">Packets/Second</span>
+                    <span class="metric-value" id="packetRate">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Bandwidth</span>
+                    <span class="metric-value" id="bandwidth">0 MB/s</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Success Rate</span>
+                    <span class="metric-value" id="successRate">100%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Time Elapsed</span>
+                    <span class="metric-value" id="timeElapsed">00:00</span>
+                </div>
+            </div>
         </div>
 
-        <div class="attack-panel">
-            <h2 class="panel-title">ATTACK LOGS</h2>
+        <!-- Attack Logs -->
+        <div class="panel">
+            <div class="panel-header">
+                <i class="fas fa-terminal"></i>
+                <h2>SYSTEM LOGS</h2>
+                <div class="log-controls">
+                    <button class="btn btn-clear" onclick="clearLogs()">
+                        <i class="fas fa-trash"></i> CLEAR
+                    </button>
+                    <button class="btn btn-save" onclick="saveLogs()">
+                        <i class="fas fa-save"></i> SAVE
+                    </button>
+                </div>
+            </div>
             <div class="log-container" id="attackLogs">
-                <div class="log-entry log-info">[SYSTEM] Darkness DDoS Toolkit initialized</div>
-                <div class="log-entry log-info">[SYSTEM] Ready to launch attacks</div>
-            </div>
-            <div style="text-align: center; margin-top: 10px;">
-                <button class="btn btn-clear" onclick="clearLogs()">🗑️ CLEAR LOGS</button>
-                <button class="btn btn-save" onclick="saveLogs()">💾 SAVE LOGS</button>
+                <div class="log-entry log-info">
+                    <span class="log-time">[12:00:00]</span>
+                    <span class="log-message">DARKNET DDoS Framework initialized</span>
+                </div>
+                <div class="log-entry log-success">
+                    <span class="log-time">[12:00:01]</span>
+                    <span class="log-message">All systems operational - Ready for commands</span>
+                </div>
             </div>
         </div>
 
-        <div class="attack-panel">
-            <h2 class="panel-title">CONFIGURATION MANAGER</h2>
-            <div class="form-group">
-                <label for="configName">CONFIGURATION NAME:</label>
-                <input type="text" id="configName" placeholder="My Attack Configuration">
+        <!-- Configuration Manager -->
+        <div class="panel">
+            <div class="panel-header">
+                <i class="fas fa-sliders-h"></i>
+                <h2>CONFIGURATION MANAGER</h2>
+                <span class="panel-badge">ADMIN</span>
             </div>
-            <div style="text-align: center;">
-                <button class="btn" onclick="saveConfiguration()">💾 SAVE CONFIGURATION</button>
-                <button class="btn" onclick="loadConfiguration()">📁 LOAD CONFIGURATION</button>
-                <button class="btn btn-delete" onclick="deleteConfiguration()">🗑️ DELETE CONFIGURATION</button>
+            <div class="config-manager">
+                <div class="form-group">
+                    <label for="configName">
+                        <i class="fas fa-tag"></i> CONFIG NAME
+                    </label>
+                    <input type="text" id="configName" placeholder="Enter configuration name">
+                </div>
+                <div class="config-actions">
+                    <button class="btn btn-save" onclick="saveConfiguration()">
+                        <i class="fas fa-save"></i> SAVE CONFIG
+                    </button>
+                    <button class="btn btn-load" onclick="loadConfiguration()">
+                        <i class="fas fa-folder-open"></i> LOAD CONFIG
+                    </button>
+                    <button class="btn btn-delete" onclick="deleteConfiguration()">
+                        <i class="fas fa-trash"></i> DELETE CONFIG
+                    </button>
+                </div>
+                <div id="configList" class="config-list"></div>
             </div>
-            <div id="configList" style="margin-top: 15px; color: #00ff00;"></div>
         </div>
     </div>
 
@@ -157,4 +328,4 @@
     <script src="config.js"></script>
     <script src="app.js"></script>
 </body>
-</html>
+                        </html>

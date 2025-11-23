@@ -1,18 +1,25 @@
-// Application logic for Darkness DDoS Toolkit
+// Application logic for DARKNET DDoS Framework
 let attackRunning = false;
 let packetsSent = 0;
 let activeThreads = 0;
 let currentAttackInterval = null;
+let attackStartTime = null;
 
 // Initialize application
 document.addEventListener('DOMContentLoaded', function() {
-    logMessage('Darkness DDoS Toolkit v3.0 loaded successfully', 'success');
-    logMessage('Warning: Use only for authorized penetration testing', 'warning');
+    logMessage('DARKNET DDoS Framework v4.0 initialized', 'info');
+    logMessage('All systems operational - Ready for commands', 'success');
+    logMessage('Warning: Authorized penetration testing only', 'warning');
+    
     updateStats();
     loadSavedConfigurations();
+    loadCurrentSettings();
     
     // Auto-save settings every 5 seconds
     setInterval(saveCurrentSettings, 5000);
+    
+    // Update time elapsed for active attacks
+    setInterval(updateTimeElapsed, 1000);
 });
 
 function logMessage(message, type = 'info') {
@@ -21,7 +28,10 @@ function logMessage(message, type = 'info') {
     logEntry.className = `log-entry log-${type}`;
     
     const timestamp = new Date().toLocaleTimeString();
-    logEntry.innerHTML = `<strong>[${timestamp}]</strong> ${message}`;
+    logEntry.innerHTML = `
+        <span class="log-time">[${timestamp}]</span>
+        <span class="log-message">${message}</span>
+    `;
     
     logContainer.appendChild(logEntry);
     logContainer.scrollTop = logContainer.scrollHeight;
@@ -34,15 +44,33 @@ function updateStats() {
     const attackPower = Math.min(100, Math.floor(packetsSent / 100));
     document.getElementById('attackPower').textContent = attackPower + '%';
     
-    document.getElementById('targetStatus').textContent = attackRunning ? 'UNDER ATTACK' : 'IDLE';
-    document.getElementById('targetStatus').style.color = attackRunning ? '#ff0000' : '#00ff00';
+    const targetStatus = document.getElementById('targetStatus');
+    targetStatus.textContent = attackRunning ? 'UNDER FIRE' : 'IDLE';
+    targetStatus.style.color = attackRunning ? '#00ff00' : '#ff0000';
     
-    const progress = document.getElementById('attackProgress');
-    progress.style.width = attackPower + '%';
+    // Update progress bars
+    document.querySelectorAll('.stat-fill').forEach((fill, index) => {
+        const fills = [packetsSent / 1000, attackPower, activeThreads / 10, attackRunning ? 100 : 0];
+        fill.style.width = Math.min(100, fills[index]) + '%';
+    });
     
-    document.getElementById('progressText').textContent = attackRunning ? 
-        `Attacking... ${packetsSent} packets sent` : 
-        'Ready to attack...';
+    // Update packet rate and bandwidth
+    if (attackRunning) {
+        const packetRate = Math.floor(Math.random() * 1000) + 500;
+        const bandwidth = (packetRate * 1024 / 1000000).toFixed(2);
+        document.getElementById('packetRate').textContent = packetRate.toLocaleString();
+        document.getElementById('bandwidth').textContent = bandwidth + ' MB/s';
+    }
+}
+
+function updateTimeElapsed() {
+    if (attackRunning && attackStartTime) {
+        const elapsed = Math.floor((Date.now() - attackStartTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        document.getElementById('timeElapsed').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
 }
 
 function startAttack(type) {
@@ -60,11 +88,17 @@ function startAttack(type) {
     }
 
     attackRunning = true;
+    attackStartTime = Date.now();
     packetsSent = 0;
     activeThreads = parseInt(document.getElementById('threads').value) || 50;
 
-    logMessage(`Starting ${type.toUpperCase()} attack on ${target}:${port}`, 'success');
-    logMessage(`Launching ${activeThreads} attack threads with ${attackConfig.attack_methods[type]?.parameters.packet_size || 1024} byte packets`, 'info');
+    logMessage(`🚀 Starting ${type.toUpperCase()} attack on ${target}:${port}`, 'success');
+    logMessage(`⚡ Launching ${activeThreads} attack threads`, 'info');
+    logMessage(`🎯 Target: ${target} | Port: ${port} | Type: ${type}`, 'info');
+
+    // Update progress text
+    document.getElementById('progressText').textContent = `Attacking ${target}...`;
+    document.getElementById('successRate').textContent = '98%';
 
     // Simulate attack progress
     currentAttackInterval = setInterval(() => {
@@ -74,14 +108,22 @@ function startAttack(type) {
         }
 
         const basePackets = attackConfig.attack_methods[type]?.parameters.packet_rate || 100;
-        packetsSent += Math.floor(Math.random() * basePackets * activeThreads / 10);
+        const newPackets = Math.floor(Math.random() * basePackets * activeThreads / 10);
+        packetsSent += newPackets;
+        
+        const progressPercent = Math.min(100, Math.floor(packetsSent / 500));
+        document.getElementById('attackProgress').style.width = progressPercent + '%';
+        document.getElementById('progressPercent').textContent = progressPercent + '%';
+        
         updateStats();
 
-        // Simulate different attack behaviors
-        if (packetsSent > 10000 && packetsSent < 15000) {
+        // Simulate attack events
+        if (packetsSent > 5000 && packetsSent < 10000) {
             logMessage('Target network showing increased latency', 'warning');
-        } else if (packetsSent > 30000) {
+        } else if (packetsSent > 20000) {
             logMessage('Target service degradation detected', 'success');
+        } else if (packetsSent > 50000) {
+            logMessage('Significant impact on target services', 'success');
         }
 
     }, 100);
@@ -91,8 +133,8 @@ function startAttack(type) {
     setTimeout(() => {
         if (attackRunning) {
             stopAllAttacks();
-            logMessage(`Attack completed automatically after ${duration/1000} seconds`, 'info');
-            logMessage(`Total packets sent: ${packetsSent.toLocaleString()}`, 'success');
+            logMessage(`✅ Attack completed after ${duration/1000} seconds`, 'info');
+            logMessage(`📊 Total packets sent: ${packetsSent.toLocaleString()}`, 'success');
         }
     }, duration);
 }
@@ -117,20 +159,33 @@ function startCustomAttack() {
 function stopAllAttacks() {
     attackRunning = false;
     activeThreads = 0;
+    attackStartTime = null;
     
     if (currentAttackInterval) {
         clearInterval(currentAttackInterval);
         currentAttackInterval = null;
     }
     
-    logMessage('All attacks stopped', 'warning');
-    logMessage(`Final statistics: ${packetsSent.toLocaleString()} packets sent`, 'info');
+    document.getElementById('attackProgress').style.width = '0%';
+    document.getElementById('progressPercent').textContent = '0%';
+    document.getElementById('progressText').textContent = 'System Ready - No Active Attacks';
+    document.getElementById('packetRate').textContent = '0';
+    document.getElementById('bandwidth').textContent = '0 MB/s';
+    document.getElementById('successRate').textContent = '100%';
+    document.getElementById('timeElapsed').textContent = '00:00';
+    
+    logMessage('🛑 All attacks stopped', 'warning');
+    logMessage(`📈 Final statistics: ${packetsSent.toLocaleString()} packets sent`, 'info');
     updateStats();
 }
 
+// ... (fungsi exportConfig, importConfig, handleFileImport, getCurrentSettings, saveCurrentSettings, loadCurrentSettings, 
+// saveConfiguration, loadConfiguration, deleteConfiguration, loadSavedConfigurations, clearLogs, saveLogs tetap sama seperti sebelumnya)
+// Implementasikan fungsi-fungsi tersebut sesuai dengan kebutuhan
+
 function exportConfig() {
     const config = {
-        darkness_ddos_config: {
+        darknet_config: {
             ...attackConfig,
             timestamp: new Date().toISOString(),
             current_settings: getCurrentSettings()
@@ -142,7 +197,7 @@ function exportConfig() {
     
     const link = document.createElement('a');
     link.href = URL.createObjectURL(dataBlob);
-    link.download = `darkness_config_${new Date().getTime()}.json`;
+    link.download = `darknet_config_${new Date().getTime()}.json`;
     link.click();
     
     logMessage('Configuration exported successfully', 'success');
@@ -176,6 +231,7 @@ function applyImportedConfig(config) {
         document.getElementById('threads').value = config.current_settings.threads || 50;
         document.getElementById('duration').value = config.current_settings.duration || 60;
         document.getElementById('packetSize').value = config.current_settings.packetSize || 1024;
+        document.getElementById('customPayload').value = config.current_settings.customPayload || '';
     }
 }
 
@@ -193,11 +249,11 @@ function getCurrentSettings() {
 
 function saveCurrentSettings() {
     const settings = getCurrentSettings();
-    localStorage.setItem('darknessCurrentSettings', JSON.stringify(settings));
+    localStorage.setItem('darknetCurrentSettings', JSON.stringify(settings));
 }
 
 function loadCurrentSettings() {
-    const saved = localStorage.getItem('darknessCurrentSettings');
+    const saved = localStorage.getItem('darknetCurrentSettings');
     if (saved) {
         const settings = JSON.parse(saved);
         document.getElementById('targetUrl').value = settings.targetUrl || '';
@@ -212,21 +268,21 @@ function loadCurrentSettings() {
 
 function saveConfiguration() {
     const name = document.getElementById('configName').value.trim() || `config_${new Date().getTime()}`;
-    const configurations = JSON.parse(localStorage.getItem('darknessConfigurations') || '{}');
+    const configurations = JSON.parse(localStorage.getItem('darknetConfigurations') || '{}');
     
     configurations[name] = {
         ...getCurrentSettings(),
         savedAt: new Date().toISOString()
     };
     
-    localStorage.setItem('darknessConfigurations', JSON.stringify(configurations));
+    localStorage.setItem('darknetConfigurations', JSON.stringify(configurations));
     logMessage(`Configuration "${name}" saved successfully`, 'success');
     loadSavedConfigurations();
 }
 
 function loadConfiguration() {
     const name = document.getElementById('configName').value.trim();
-    const configurations = JSON.parse(localStorage.getItem('darknessConfigurations') || '{}');
+    const configurations = JSON.parse(localStorage.getItem('darknetConfigurations') || '{}');
     
     if (configurations[name]) {
         const config = configurations[name];
@@ -246,11 +302,11 @@ function loadConfiguration() {
 
 function deleteConfiguration() {
     const name = document.getElementById('configName').value.trim();
-    const configurations = JSON.parse(localStorage.getItem('darknessConfigurations') || '{}');
+    const configurations = JSON.parse(localStorage.getItem('darknetConfigurations') || '{}');
     
     if (configurations[name]) {
         delete configurations[name];
-        localStorage.setItem('darknessConfigurations', JSON.stringify(configurations));
+        localStorage.setItem('darknetConfigurations', JSON.stringify(configurations));
         logMessage(`Configuration "${name}" deleted`, 'success');
         loadSavedConfigurations();
     } else {
@@ -259,21 +315,23 @@ function deleteConfiguration() {
 }
 
 function loadSavedConfigurations() {
-    const configurations = JSON.parse(localStorage.getItem('darknessConfigurations') || '{}');
+    const configurations = JSON.parse(localStorage.getItem('darknetConfigurations') || '{}');
     const configList = document.getElementById('configList');
     
     if (Object.keys(configurations).length === 0) {
-        configList.innerHTML = '<em>No saved configurations</em>';
+        configList.innerHTML = '<em style="color: #ff4444;">No saved configurations</em>';
         return;
     }
     
-    let html = '<strong>Saved Configurations:</strong><br>';
+    let html = '<strong style="color: #ff0000; margin-bottom: 10px; display: block;">Saved Configurations:</strong>';
     for (const [name, config] of Object.entries(configurations)) {
         const date = new Date(config.savedAt).toLocaleDateString();
-        html += `<div style="margin: 5px 0;">
-            <span style="color: #00ffff;">${name}</span> 
-            <small>(Saved: ${date})</small>
-        </div>`;
+        html += `
+            <div style="margin: 8px 0; padding: 8px; background: rgba(255, 0, 0, 0.1); border-radius: 5px;">
+                <span style="color: #00ff00; font-weight: bold;">${name}</span> 
+                <small style="color: #ff4444;">(Saved: ${date})</small>
+            </div>
+        `;
     }
     
     configList.innerHTML = html;
@@ -289,10 +347,7 @@ function saveLogs() {
     const blob = new Blob([logs], {type: 'text/plain'});
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `darkness_logs_${new Date().getTime()}.txt`;
+    link.download = `darknet_logs_${new Date().getTime()}.txt`;
     link.click();
     logMessage('Logs saved successfully', 'success');
-}
-
-// Load current settings when page loads
-loadCurrentSettings();
+            }

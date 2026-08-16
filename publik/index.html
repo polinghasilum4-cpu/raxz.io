@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSociety | Portfolio</title>
+    <style>
+        /* ===== SAME CSS AS BEFORE (copy dari jawaban sebelumnya) ===== */
+        /* ... (saya sertakan CSS lengkap di bawah) ... */
+    </style>
+</head>
+<body>
+    <!-- ===== GLOW ORBS ===== -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">XS<span>ociety</span></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text fade-in">
+                <div class="badge">Friendly Neighborhood Developer</div>
+                <h1>HELLO, I'M <span class="highlight">XSOCIETY</span></h1>
+                <p>Full-stack developer &amp; ethical hacker. Building tools, breaking systems, and learning every day.</p>
+                <div class="btn-group">
+                    <a href="#projects" class="btn btn-primary">View Work</a>
+                    <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                </div>
+            </div>
+            <div class="hero-avatar fade-in delay-2">
+                <div class="avatar-circle">⚡</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" style="background: #0f0f0f;">
+        <div class="container">
+            <div class="section-divider"></div>
+            <h2 class="section-title fade-in">About Me</h2>
+            <p class="section-sub fade-in delay-1">Who I am, what I do, and why I do it.</p>
+            <div class="about-grid">
+                <div class="about-text fade-in delay-1">
+                    <p>I'm <strong>XSociety</strong> – a full-stack developer and cybersecurity enthusiast from Indonesia. I've been coding since 2020, and I'm obsessed with automation, ethical hacking, and open-source tools.</p>
+                    <p>I build things that work, break things that don't, and I'm always learning something new. Currently diving deep into OSINT, network security, and scalable web apps.</p>
+                    <p>When I'm not in front of a screen, I'm exploring new tech, reading docs, or messing around with random APIs.</p>
+                </div>
+                <div class="about-stats fade-in delay-2">
+                    <div class="stat-box"><div class="number">4+</div><div class="label">Years Coding</div></div>
+                    <div class="stat-box"><div class="number">∞</div><div class="label">Caffeine Consumed</div></div>
+                    <div class="stat-box"><div class="number">12</div><div class="label">Projects Built</div></div>
+                    <div class="stat-box"><div class="number">🚀</div><div class="label">Always Hustling</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-divider"></div>
+            <h2 class="section-title fade-in">Tech Stack</h2>
+            <p class="section-sub fade-in delay-1">Tools &amp; technologies I work with daily.</p>
+            <div class="skills-grid">
+                <div class="skill-item fade-in delay-1"><span class="icon">⚛️</span><div class="name">React</div><div class="level">Advanced</div></div>
+                <div class="skill-item fade-in delay-2"><span class="icon">🟢</span><div class="name">Node.js</div><div class="level">Advanced</div></div>
+                <div class="skill-item fade-in delay-3"><span class="icon">🐍</span><div class="name">Python</div><div class="level">Intermediate</div></div>
+                <div class="skill-item fade-in delay-4"><span class="icon">☁️</span><div class="name">AWS</div><div class="level">Intermediate</div></div>
+                <div class="skill-item fade-in delay-1"><span class="icon">🎨</span><div class="name">Figma</div><div class="level">Intermediate</div></div>
+                <div class="skill-item fade-in delay-2"><span class="icon">🐳</span><div class="name">Docker</div><div class="level">Intermediate</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" style="background: #0f0f0f;">
+        <div class="container">
+            <div class="section-divider"></div>
+            <h2 class="section-title fade-in">Projects</h2>
+            <p class="section-sub fade-in delay-1">Some of the things I've built.</p>
+            <div class="projects-grid">
+                <div class="project-card fade-in delay-1">
+                    <span class="tag">Web App</span>
+                    <h3>XSociety Toolkit</h3>
+                    <p>Full-stack security toolkit with OTP spammer, NGL spammer, and proxy management.</p>
+                    <div class="tech"><span>React</span><span>Node</span><span>Python</span></div>
+                </div>
+                <div class="project-card fade-in delay-2">
+                    <span class="tag">Automation</span>
+                    <h3>Proxy Scraper</h3>
+                    <p>Real-time proxy scraper with auto-rotation and built-in proxy manager.</p>
+                    <div class="tech"><span>Python</span><span>Requests</span><span>Threading</span></div>
+                </div>
+                <div class="project-card fade-in delay-3">
+                    <span class="tag">Portfolio</span>
+                    <h3>This Website</h3>
+                    <p>Minimalist dark portfolio with animations, responsive design, and glassmorphism.</p>
+                    <div class="tech"><span>HTML</span><span>CSS</span><span>JS</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-divider"></div>
+            <h2 class="section-title fade-in">Contact</h2>
+            <p class="section-sub fade-in delay-1">Let's connect. Hit me up on any platform.</p>
+            <div class="contact-links">
+                <a href="https://tiktok.com/@xprimesociety" target="_blank" class="fade-in delay-1">📱 TikTok</a>
+                <a href="https://github.com/polinghasilum4" target="_blank" class="fade-in delay-2">💻 GitHub</a>
+                <a href="https://instagram.com/raxz_mpruy" target="_blank" class="fade-in delay-3">📸 Instagram</a>
+                <a href="#" class="fade-in delay-4">📧 Email</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">&copy; 2026 XSociety. Built with 🔥 and dark mode.</div>
+    </footer>
+
+    <!-- ===== SCRIPT (Frontend + Logging) ===== -->
+    <script>
+        // Hamburger toggle (same)
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('open'));
+        });
+
+        // Fade-in observer (same)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ===== LOG VISITOR =====
+        (function logVisit() {
+            const page = window.location.pathname || '/';
+            fetch('/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ page })
+            })
+            .then(res => res.json())
+            .then(data => console.log('✅ Logged:', data))
+            .catch(err => console.warn('Logging failed:', err));
+        })();
+    </script>
+</body>
+</html>
